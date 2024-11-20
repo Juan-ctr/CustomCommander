@@ -1,0 +1,12 @@
+{
+  "servers": [
+    {
+      "hostName": "Reemplazar por ip",
+      "description": "Real"
+    },
+    {
+      "hostName": "Reemplazar por ip",
+      "description": "Test"
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+﻿<Window x:Class="CustomCommander.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CustomCommander.Views"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" WindowState="Maximized">
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Border Grid.Column="0" BorderBrush="Gray" BorderThickness="2" CornerRadius="10" Margin="10" Padding="5">
+            <Grid>
+                <TextBlock Text="Directorio Remoto" FontWeight="Bold" Margin="0,0,0,5" FontSize="13" HorizontalAlignment="Center"/>
+                <!-- Control de navegación para el directorio remoto -->
+                <StackPanel Orientation="Horizontal" Margin="5,20,0,10" VerticalAlignment="Top" HorizontalAlignment="Left">
+                    <Button Content="⬆" Width="30" Height="20" Margin="0,0,5,0" Command="{Binding NavigateToRemoteDirectoryCommand}"/>
+                    <!-- Subir un nivel -->
+                    <TextBlock Name="RemoteCurrentPathTextBox" Width="500" Height="20" Margin="5,0,0,0" Background="Transparent" 
+                           Text="{Binding CurrentRemotePath}" FontSize="12"/>
+                    <Button Content="Desconectar" Width="100" Height="20" Margin="0,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Top" 
+                           Command="{Binding DisconnectCommand}" />
+                </StackPanel>
+
+                <!-- ListView para mostrar archivos del directorio remoto -->
+                <ListView Name="RemoteDirectoryList" Margin="0,50,0,0" ItemsSource="{Binding RemoteDir}"
+                      MouseDoubleClick="RemoteDirectoryList_MouseDoubleClick"
+                      MouseMove="RemoteDirectoryList_MouseMove"
+                      AllowDrop="True"
+                      Drop="RemoteDirectoryList_Drop">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Nombre" DisplayMemberBinding="{Binding Name}" Width="200"/>
+                            <GridViewColumn Header="Tamaño" DisplayMemberBinding="{Binding Attributes.Size}" Width="100"/>
+                            <GridViewColumn Header="Fecha Modificación" DisplayMemberBinding="{Binding LastWriteTime}" Width="150"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Grid>
+        </Border>
+
+        <!-- Rectángulo para la Vista del Directorio Local -->
+        <Border Grid.Column="1" BorderBrush="Gray" BorderThickness="2" CornerRadius="10" Margin="10" Padding="5">
+            <Grid>
+                <TextBlock Text="Directorio Local" FontWeight="Bold" Margin="0,0,0,5" FontSize="13" HorizontalAlignment="Center"/>
+
+                <!-- Control de navegación para el directorio local -->
+                <StackPanel Orientation="Horizontal" Margin="5,20,0,10" VerticalAlignment="Top" HorizontalAlignment="Left">
+                    <Button Content="⬆" Width="30" Height="20" Margin="0,0,5,0" Command="{Binding NavigateToLocalDirectoryCommand}"/>
+                    <!--Click="LocalGoUpDirectory_Click"/>-->
+                    <!-- Subir un nivel -->
+                    <TextBlock Name="LocalCurrentPathTextBox" Width="500" Margin="5,0,0,0" Background="Transparent" 
+                           Text="{Binding CurrentLocalPath}" FontSize="12"/>
+                </StackPanel>
+
+                <!-- ListView para mostrar archivos del directorio local -->
+                <ListView Name="LocalDirectoryList" ItemsSource="{Binding LocalDir}" Margin="0,50,0,0"
+                      MouseDoubleClick="LocalDirectoryList_MouseDoubleClick"
+                      MouseMove="LocalDirectoryList_MouseMove"
+                      AllowDrop="True"
+                      Drop="LocalDirectoryList_Drop">
+                    <!--PreviewMouseLeftButtonDown="LocalDirectoryList_PreviewMouseLeftButtonDown"-->
+                    <!--PreviewMouseMove="LocalDirectoryList_PreviewMouseMove"-->
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Nombre" DisplayMemberBinding="{Binding Name}" Width="200"/>
+                            <GridViewColumn Header="Tamaño" DisplayMemberBinding="{Binding Length}" Width="100"/>
+                            <GridViewColumn Header="Fecha Modificación" DisplayMemberBinding="{Binding LastWriteTime}" Width="150"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Grid>
+        </Border>
+
+    </Grid>
+</Window>
